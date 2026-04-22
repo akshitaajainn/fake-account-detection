@@ -1,0 +1,11 @@
+metric,value
+total_users,500
+high_risk_count,139
+medium_risk_count,11
+low_risk_count,350
+high_risk_pct,27.8
+bot_detection_rate,92.7
+false_positive_rate,N/A
+new_acct_high_risk_pct,100.0
+avg_risk_score,23.6
+median_risk_score,0.0
