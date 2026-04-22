@@ -1,6 +1,6 @@
 # Fake Account Detection
 
-Portfolio project focused on detecting suspicious or bot accounts on a social media platform using rule-based anomaly detection, behavioural feature engineering, and weighted risk scoring.
+This project is focused on detecting suspicious or bot accounts on a social media platform using rule-based anomaly detection, behavioural feature engineering, and weighted risk scoring.
 
 ---
 
