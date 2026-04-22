@@ -2,8 +2,7 @@
 -- fraud_queries.sql
 -- Fake Account Detector — SQL Analysis Queries
 -- =============================================================
--- These queries are written in standard SQL (SQLite / PostgreSQL
--- compatible). The run_sql_queries.py script loads scored_users.csv
+-- These queries are written in standard SQL. The run_sql_queries.py script loads scored_users.csv
 -- into an in-memory SQLite database and executes each one.
 -- =============================================================
 
