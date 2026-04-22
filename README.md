@@ -1,40 +1,72 @@
-# 🔍 Fake Account Detector
+# Fake Account Detection
 
-> **Portfolio project** — Social media fraud detection using rule-based anomaly detection, behavioural feature engineering, and weighted risk scoring.  
-> Stack: **Python · Pandas · NumPy · Matplotlib · Seaborn · SQL**
+Portfolio project focused on detecting suspicious or bot accounts on a social media platform using rule-based anomaly detection, behavioural feature engineering, and weighted risk scoring.
 
----
-
-## 📌 Project Overview
-
-This project simulates the kind of account-integrity analysis performed by fraud / risk analyst teams at companies like Amazon, Meta, Twitter (X), and TikTok. It detects suspicious or bot accounts on a social media platform by:
-
-- Generating a realistic synthetic dataset of **500 social media users**
-- Engineering **8 weighted fraud signals** from raw behavioural features
-- Producing a **0–100 risk score** and classifying accounts as **Low / Medium / High** risk
-- Running **SQL-style analytical queries** to surface patterns
-- Generating **6 visualisations** for stakeholder reporting
+Tech stack: Python, Pandas, NumPy, Matplotlib, Seaborn, SQL
 
 ---
 
-## 🗂️ Project Structure
+## Project Goal
+
+The goal of this project is to simulate how fraud or risk analytics teams identify suspicious accounts on large social media platforms. The project builds a small analytical pipeline that generates user data, cleans it, engineers fraud-related behavioural signals, assigns a risk score, and produces insights through SQL queries and visual analysis.
+
+The final output helps identify accounts that require manual investigation and demonstrates a simple explainable approach to fraud detection.
+
+---
+
+## Dataset Pipeline
+
+The project follows a step-by-step data pipeline:
+
+1. **Data Generation**
+   - A synthetic dataset of 500 social media users is created.
+   - Each user contains attributes such as account age, posts per day, login behaviour, followers, following count, and profile completeness.
+
+2. **Data Cleaning**
+   - Missing values are handled
+   - Numeric values are clipped to remove unrealistic outliers
+   - Data types are standardized
+
+3. **Feature Engineering**
+   - Behaviour-based fraud signals are created from raw attributes
+   - Each signal represents suspicious behaviour patterns
+
+4. **Risk Scoring**
+   - Each fraud signal has a weight
+   - Signals are combined into a **0–100 risk score**
+
+5. **Risk Classification**
+   - Accounts are categorized into Low, Medium, or High risk tiers
+
+6. **Analytics & Visualization**
+   - KPIs are calculated
+   - SQL-style analysis is performed
+   - Visualizations are generated for reporting
+
+---
+
+## Project Structure
 
 ```
 fake_account_detector/
 ├── src/
-│   ├── generate_data.py        # Synthesise 500-user dataset
-│   ├── clean_data.py           # Null handling, outlier clipping, type coercion
-│   ├── feature_engineering.py  # 8 fraud signals + weighted risk score
-│   ├── analysis.py             # KPI calculations + SQL-style Pandas queries
-│   └── visualize.py            # 6 Matplotlib / Seaborn charts
+│   ├── generate_data.py
+│   ├── clean_data.py
+│   ├── feature_engineering.py
+│   ├── analysis.py
+│   └── visualize.py
+│
 ├── sql/
-│   ├── fraud_queries.sql       # 8 analyst SQL queries
-│   └── run_sql_queries.py      # Executes SQL against in-memory SQLite
+│   ├── fraud_queries.sql
+│   └── run_sql_queries.py
+│
 ├── data/
-│   ├── raw_users.csv           # Raw generated data
-│   ├── clean_users.csv         # After cleaning
-│   ├── scored_users.csv        # With signals + risk score
-│   └── review_queue.csv        # High-risk accounts only
+│   ├── raw_users.csv
+│   ├── clean_users.csv
+│   ├── scored_users.csv
+│   ├── kpi_summary.csv
+│   └── review_queue.csv
+│
 ├── visuals/
 │   ├── 01_risk_distribution.png
 │   ├── 02_risk_score_histogram.png
@@ -42,98 +74,134 @@ fake_account_detector/
 │   ├── 04_logins_vs_posts.png
 │   ├── 05_ff_ratio_by_tier.png
 │   └── 06_age_vs_risk.png
+│
 └── README.md
 ```
 
 ---
 
-## 🚀 Quick Start
+## Running the Project
 
-```bash
-# 1. Clone / download the project
-# 2. Install dependencies
+Install required libraries:
+
+```
 pip install pandas numpy matplotlib seaborn
+```
 
-# 3. Run the full pipeline (in order)
+Run the pipeline in the following order:
+
+```
 python src/generate_data.py
 python src/clean_data.py
 python src/feature_engineering.py
 python src/analysis.py
 python src/visualize.py
+```
 
-# 4. Run SQL queries
+To execute SQL queries:
+
+```
 python sql/run_sql_queries.py
 ```
 
 ---
 
-## 🧠 Fraud Signals (weighted)
+## Fraud Signals
+
+The model uses rule-based signals derived from behavioural patterns.
 
 | Signal | Rule | Weight |
-|---|---|---|
+|------|------|------|
 | High Login Frequency | logins/day > 10 | 20 |
-| New + High Activity | age < 60d AND posts > 20/day | 20 |
-| Extreme Posts | posts/day > 100 | 25 |
-| Low Follower-Following Ratio | followers/following < 0.1 | 15 |
-| Location Hopping | location changes > 5 in 30d | 15 |
-| Failed Logins | failures > 5 in 7d | 15 |
+| New Account With High Activity | account_age < 60 days AND posts/day > 20 | 20 |
+| Extreme Posting Activity | posts/day > 100 | 25 |
+| Low Follower Ratio | followers/following < 0.1 | 15 |
+| Frequent Location Changes | location changes > 5 in 30 days | 15 |
+| Multiple Failed Logins | failures > 5 in 7 days | 15 |
 | Community Reports | reports ≥ 3 | 20 |
-| Incomplete Profile | completeness < 40% | 10 |
+| Incomplete Profile | profile completeness < 40% | 10 |
 
-**Risk Score** = (weighted sum of active flags / 120) × 100
+Risk score calculation:
 
----
-
-## 📊 Risk Tiers
-
-| Tier | Score Range | Meaning |
-|---|---|---|
-| 🟢 Low | 0 – 24 | Normal behaviour |
-| 🟡 Medium | 25 – 54 | Warrants monitoring |
-| 🔴 High | 55 – 100 | Immediate review |
+```
+Risk Score = (weighted sum of triggered signals / 120) * 100
+```
 
 ---
 
-## 📈 Key KPIs
+## Risk Tiers
 
-- **Bot Detection Rate** — % of labelled bots correctly classified as High risk
-- **False Positive Rate** — % of legitimate users incorrectly flagged
-- **New Account High-Risk Rate** — % of accounts < 60 days old in High tier
-- **Signal Trigger Frequency** — how often each rule fires (used to tune weights)
+| Tier | Score Range | Interpretation |
+|------|-------------|---------------|
+| Low | 0 – 24 | Normal user behaviour |
+| Medium | 25 – 54 | Requires monitoring |
+| High | 55 – 100 | Requires manual investigation |
 
----
-
-## 🗄️ SQL Queries Included
-
-| Query | Description |
-|---|---|
-| Q1 | Abnormal login frequency (logins/day > 10) |
-| Q2 | Multi-account IP detection (GROUP BY ip HAVING count > 1) |
-| Q3 | New account burst pattern (age < 30d AND high posts) |
-| Q4 | Location hoppers (VPN / proxy indicator) |
-| Q5 | Profile completeness KPI by risk tier |
-| Q6 | Fraud signal frequency report |
-| Q7 | High-risk review queue (≥ 3 signals triggered) |
-| Q8 | Account age bucket time-series proxy |
+Accounts in the High risk tier are added to a **review queue for investigation**.
 
 ---
 
-## 📊 Dashboard Suggestions (Power BI
+## Key Metrics Generated
 
-1. **Summary Cards** — Total accounts, High-risk count, Bot detection rate, False positive rate
-2. **Risk Tier Donut Chart** — Low / Medium / High breakdown
-3. **Risk Score Distribution** — Histogram with tier colour bands
-4. **Signal Heatmap** — Which signals co-occur most
-5. **IP Cluster Table** — IPs with multiple accounts (drillable)
-6. **Account Age vs Risk Scatter** — New accounts at top-right
+The analysis step produces several useful metrics:
+
+- Bot detection rate
+- False positive rate
+- High-risk rate for newly created accounts
+- Frequency of each fraud signal
+
+These metrics help understand the effectiveness of the rule-based detection system.
+
+---
+
+## SQL Analysis
+
+The project includes SQL queries that simulate analyst workflows.
+
+| Query | Purpose |
+|------|--------|
+| Q1 | Identify users with abnormal login frequency |
+| Q2 | Detect multiple accounts using the same IP address |
+| Q3 | Detect burst posting behaviour from new accounts |
+| Q4 | Identify frequent location changes (possible VPN use) |
+| Q5 | Profile completeness statistics by risk tier |
+| Q6 | Frequency of fraud signals |
+| Q7 | Generate review queue of high-risk accounts |
+| Q8 | Distribution of account age across risk tiers |
+
+These queries demonstrate how SQL can be used to explore suspicious activity patterns.
 
 ---
 
-## 💡 What I Learned / Interview Talking Points
+## Visual Insights
 
-- **Rule-based vs ML detection** — Rule-based systems are explainable and auditable, making them preferred for regulated environments. ML models may catch subtler patterns but require labelled data and are harder to justify to compliance teams.
-- **Threshold tuning** — Every threshold (logins > 10, ff_ratio < 0.1) involves a precision-recall trade-off. Lowering them catches more bots but increases false positives and manual review cost.
-- **Signal weighting** — Weights should be validated against historical labelled data. In production, logistic regression or gradient boosting can learn weights automatically.
-- **IP clustering** — Multiple accounts from one IP is strong signal but must account for NAT (office/university networks). Confidence increases with additional corroborating signals.
+The project generates multiple charts for analysis and reporting.
+
+📊 Risk Tier Distribution  
+📊 Risk Score Histogram  
+📊 Fraud Signal Correlation Heatmap  
+📊 Logins vs Posts Scatter Plot  
+📊 Follower-Following Ratio by Risk Tier  
+📊 Account Age vs Risk Score
+
+These visualizations help identify patterns commonly associated with automated or fraudulent accounts.
 
 ---
+
+## Key Takeaways
+
+- Rule-based fraud detection systems are simple, explainable, and easy to audit.
+- Behavioural signals can reveal suspicious activity without requiring machine learning models.
+- Threshold selection directly affects the balance between detecting fraud and minimizing false positives.
+- Combining multiple weak signals often produces stronger indicators of suspicious behaviour.
+
+---
+
+## Possible Extensions
+
+Future improvements could include:
+
+- Training a machine learning model for fraud classification
+- Adding time-series analysis of login behaviour
+- Building a Power BI or Tableau dashboard
+- Incorporating network analysis for coordinated bot detection
