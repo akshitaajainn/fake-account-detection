@@ -2,7 +2,15 @@
 
 Portfolio project focused on detecting suspicious or bot accounts on a social media platform using rule-based anomaly detection, behavioural feature engineering, and weighted risk scoring.
 
-Tech stack: Python, Pandas, NumPy, Matplotlib, Seaborn, SQL
+---
+
+## Tech Stack
+  • Python
+  • Pandas
+  • NumPy
+  • Matplotlib
+  • Seaborn
+  • SQL
 
 ---
 
