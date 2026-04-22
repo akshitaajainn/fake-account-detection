@@ -204,12 +204,3 @@ These visualizations help identify patterns commonly associated with automated o
 - Combining multiple weak signals often produces stronger indicators of suspicious behaviour.
 
 ---
-
-## Possible Extensions
-
-Future improvements could include:
-
-- Training a machine learning model for fraud classification
-- Adding time-series analysis of login behaviour
-- Building a Power BI or Tableau dashboard
-- Incorporating network analysis for coordinated bot detection
