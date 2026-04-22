@@ -1,7 +1,7 @@
 # 🔍 Fake Account Detector
 
 > **Portfolio project** — Social media fraud detection using rule-based anomaly detection, behavioural feature engineering, and weighted risk scoring.  
-> Stack: **Python · Pandas · NumPy · Matplotlib · Seaborn · SQLite**
+> Stack: **Python · Pandas · NumPy · Matplotlib · Seaborn · SQL**
 
 ---
 
@@ -118,7 +118,7 @@ python sql/run_sql_queries.py
 
 ---
 
-## 📊 Dashboard Suggestions (Power BI / Tableau)
+## 📊 Dashboard Suggestions (Power BI
 
 1. **Summary Cards** — Total accounts, High-risk count, Bot detection rate, False positive rate
 2. **Risk Tier Donut Chart** — Low / Medium / High breakdown
@@ -126,15 +126,6 @@ python sql/run_sql_queries.py
 4. **Signal Heatmap** — Which signals co-occur most
 5. **IP Cluster Table** — IPs with multiple accounts (drillable)
 6. **Account Age vs Risk Scatter** — New accounts at top-right
-
----
-
-## 📝 Resume Bullet Points
-
-- **Designed and implemented an end-to-end fake account detection pipeline** in Python (Pandas, NumPy) processing 500 synthetic social media profiles, achieving a **99% bot detection rate** and **0% false positive rate** using 8 weighted behavioural signals.
-- **Engineered rule-based fraud signals** including login frequency anomaly detection, follower-to-following ratio analysis, location-hopping detection, and new-account burst pattern identification, assigning weighted risk scores (0–100) to classify accounts into Low / Medium / High risk tiers.
-- **Authored 8 SQL analytical queries** (login frequency, multi-account IP clustering, new account burst detection, VPN/proxy location hopping) executed against a SQLite database to surface account-integrity KPIs for stakeholder reporting.
-- **Produced 6 data visualisations** (risk distribution, signal heatmap, scatter plots, box plots) using Matplotlib and Seaborn, and documented a Power BI dashboard specification with fraud KPI cards and drillable IP-cluster tables.
 
 ---
 
@@ -146,5 +137,3 @@ python sql/run_sql_queries.py
 - **IP clustering** — Multiple accounts from one IP is strong signal but must account for NAT (office/university networks). Confidence increases with additional corroborating signals.
 
 ---
-
-*Built as a portfolio project demonstrating fraud analytics and data engineering skills relevant to Risk Analyst / Account Integrity roles.*
